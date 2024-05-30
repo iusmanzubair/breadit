@@ -2,6 +2,7 @@ import { auth } from "@/auth"
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { format } from "date-fns"
+import { SubscribeLeaveToggle } from "@/components/SubscribeLeaveToggle";
 
 export default async function layout({ children, params: { slug } }: { children: React.ReactNode, params: { slug: string } }) {
     const session = await auth();
@@ -79,7 +80,7 @@ export default async function layout({ children, params: { slug } }: { children:
                             ) : null}
 
                             {subreddit.creatorId !== session?.user?.id ? (
-                                <SubscribeLeaveToggle />
+                                <SubscribeLeaveToggle subredditId={subreddit.id} subredditName={subreddit.name} isSubscribed={isSubscribed}/>
                             ) : null}
                         </dl>
                     </div>
