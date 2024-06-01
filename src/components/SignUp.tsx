@@ -17,7 +17,7 @@ export const SignUp = ()=> {
 
                 <p className="px-8 text-center text-sm text-zinc-700">
                     Already have account?{' '}
-                    <Link href="/sign-up" className="hover:text-zinc-800 text-sm underline underline-offset-4">Sign In</Link>
+                    <Link href="/sign-in" className="hover:text-zinc-800 text-sm underline underline-offset-4">Sign In</Link>
                 </p>
             </div>
         </div>
