@@ -4,8 +4,8 @@ import TextareaAutoSize from 'react-textarea-autosize'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { postSubmissionType, postValidator } from '@/lib/validators/post'
-import { useCallback, useRef } from 'react'
-import EditorJS from '@editorjs/editorjs'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import type EditorJS from '@editorjs/editorjs'
 import { uploadFiles } from '@/lib/uploadthing'
 
 export const Editor = ({ subredditId }: { subredditId: string }) => {
@@ -20,9 +20,16 @@ export const Editor = ({ subredditId }: { subredditId: string }) => {
     })
 
     const ref = useRef<EditorJS>()
+    const [isMounted, setIsMounted] = useState<boolean>(false)
+
+    useEffect(()=> {
+        if(typeof window !== 'undefined') {
+            setIsMounted(true)
+        }
+    }, [])
 
     const initializeEditor = useCallback(async () => {
-        const Editor = (await import('@editorjs/editorjs')).default
+        const EditorJS = (await import('@editorjs/editorjs')).default
         const Header = (await import('@editorjs/header')).default
         const Embed = (await import('@editorjs/embed')).default
         const Table = (await import('@editorjs/table')).default
@@ -33,8 +40,8 @@ export const Editor = ({ subredditId }: { subredditId: string }) => {
         const ImageTool = (await import('@editorjs/image')).default
 
         if (!ref.current) {
-            const editor = new EditorJS({
-                holder: 'editor',
+            const editor = new EditorJS({   
+                holder: 'editorjs',
                 onReady() {
                     ref.current = editor
                 },
@@ -54,22 +61,42 @@ export const Editor = ({ subredditId }: { subredditId: string }) => {
                         config: {
                             uploader: {
                                 async uploadByFile(file: File) {
-                                    const [res] = await uploadFiles([file], "imageUploader")
+                                    // const [res] = await uploadFiles([file], "imageUploader")
 
                                     return {
                                         success: 1,
-                                        file: {
-                                            url: res.fileUrl
-                                        }
+                                        // file: {
+                                        //     url: res.fileUrl
+                                        // }
                                     }
                                 }
                             }
                         }
-                    }
+                    },
+                    list: List,
+                    code: Code,
+                    inlineCode: InlineCode,
+                    table: Table,
+                    embed: Embed 
                 }
             })
         }
     }, [])
+
+    console.log(isMounted)
+    useEffect(()=> {
+        const init = async ()=> {
+            await initializeEditor()
+
+            setTimeout(()=> {
+
+            })
+            if(isMounted) {
+                init()
+                return ()=> {}
+            }
+        } 
+    }, [isMounted, initializeEditor])
 
 
     return (
@@ -77,6 +104,7 @@ export const Editor = ({ subredditId }: { subredditId: string }) => {
             <form id="subreddit-post-form" className="w-fit" onSubmit={() => { }}>
                 <div className="prose prose-stone dark:prose-invert">
                     <TextareaAutoSize placeholder='Title' className='w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none' />
+                    <div id='editorjs' className='min-h-[500px]'/>
                 </div>
             </form>
         </div>
