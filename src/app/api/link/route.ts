@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default async function GET(req: Request) {
+export async function GET(req: Request) {
     const url = new URL(req.url)
     const href = url.searchParams.get('url')
 
