@@ -1,9 +1,13 @@
+'use client'
+
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config"
 import { ExtendedPost } from "@/types/db"
 import { useIntersection } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
+import { useSession } from "next-auth/react"
 import { useRef } from "react"
+import { Post } from "./Post"
 
 interface PostFeedProps {
     initialPosts: ExtendedPost[],
@@ -11,6 +15,7 @@ interface PostFeedProps {
 }
 
 export const PostFeed = ({ initialPosts, subreddit }: PostFeedProps) => {
+    const { data: session } = useSession()
     const initialPostRef = useRef<HTMLElement>(null)
     const { ref, entry } = useIntersection({
         root: initialPostRef.current,
@@ -30,7 +35,27 @@ export const PostFeed = ({ initialPosts, subreddit }: PostFeedProps) => {
         initialData: { pages: [initialPosts], pageParams: [1] },
         initialPageParam: 1
     })
+
+    const posts = data.pages.flatMap((page) => page) ?? initialPosts
     return (
-        <div></div>
+        <ul className="flex flex-col col-span-2 space-y-6">
+            {posts.map((post, index) => {
+                const votesAmt = post.votes.reduce((acc, vote) => {
+                    if (vote.type === "UP") return acc + 1
+                    if (vote.type === "DOWN") return acc - 1
+                    return acc
+                }, 0)
+                const currentVote = post.votes.find((vote) => vote.userId === session?.user?.id)
+                if(index === posts.length - 1) {
+                    return (
+                    <li ref={ref} key={post.id}>
+                        <Post />
+                    </li>
+                    )
+                } else {
+                    return <Post />
+                }
+            })}
+        </ul>
     )
 }

@@ -37,7 +37,7 @@ export default async function page({ params }: PageProps) {
         <>
             <h1 className="font-bold text-3xl md:text-4xl h-14">r/{subreddit.name}</h1>
             <MiniCreatePost session={session}/>
-            <PostFeed />
+            <PostFeed initialPosts={subreddit.posts} subreddit={subreddit.name}/>
         </>
     )
 }
