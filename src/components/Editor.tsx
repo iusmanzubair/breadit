@@ -62,12 +62,12 @@ export const Editor = ({ subredditId }: { subredditId: string }) => {
                     //     config: {
                     //         uploader: {
                     //             async uploadByFile(file: File) {
-                    //                 const [res] = await uploadFiles([file], "imageUploader")
+                    //                 const [res] = await uploadFiles({files: [file], endpoint: 'imageUploader'})
 
                     //                 return {
                     //                     success: 1,
                     //                     file: {
-                    //                         url: res.fileUrl
+                    //                         url: res?.fileUrl
                     //                     }
                     //                 }
                     //             }
