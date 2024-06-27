@@ -49,11 +49,11 @@ export const PostFeed = ({ initialPosts, subreddit }: PostFeedProps) => {
                 if(index === posts.length - 1) {
                     return (
                     <li ref={ref} key={post.id}>
-                        <SinglePost commentAmt={post.comments.length} post={post} subredditName={post.subreddit.name}/>
+                        <SinglePost currentVote={currentVote} votesAmt={votesAmt} commentAmt={post.comments.length} post={post} subredditName={post.subreddit.name}/>
                     </li>
                     )
                 } else {
-                    return <SinglePost commentAmt={post.comments.length} post={post} subredditName={post.subreddit.name}/>
+                    return <SinglePost currentVote={currentVote} votesAmt={votesAmt} commentAmt={post.comments.length} post={post} subredditName={post.subreddit.name}/>
                 }
             })}
         </ul>
