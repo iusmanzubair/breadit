@@ -27,6 +27,9 @@ export default async function page({ params }: PageProps) {
                     comments: true,
                     subreddit: true,
                 },
+                orderBy: {
+                    createdAt: 'desc'
+                },
                 take: INFINITE_SCROLLING_PAGINATION_RESULTS
             }
         },

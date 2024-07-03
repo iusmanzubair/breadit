@@ -6,7 +6,7 @@ import { useIntersection } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useSession } from "next-auth/react"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { SinglePost } from "./Post"
 
 interface PostFeedProps {
@@ -35,6 +35,12 @@ export const PostFeed = ({ initialPosts, subreddit }: PostFeedProps) => {
         initialData: { pages: [initialPosts], pageParams: [1] },
         initialPageParam: 1
     })
+
+    useEffect(()=> {
+        if(entry?.isIntersecting) {
+            fetchNextPage()
+        }
+    }, [entry, fetchNextPage])
 
     const posts = data.pages.flatMap((page) => page) ?? initialPosts
     return (
