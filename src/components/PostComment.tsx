@@ -4,6 +4,9 @@ import { Comment, CommentVote, User } from "@prisma/client"
 import { UserAvatar } from "./UserAvatar"
 import { useRef } from "react"
 import { formatTimeToNow } from "@/lib/utils"
+import { CommentVotes } from "./CommentVotes"
+import { Button } from "./ui/Button"
+import { MessageSquare } from "lucide-react"
 
 type ExtendedComment = Comment & {
     votes: CommentVote[],
@@ -11,10 +14,13 @@ type ExtendedComment = Comment & {
 }
 
 interface PostCommentProps {
-    comment: ExtendedComment
+    comment: ExtendedComment,
+    votesAmt: number,
+    currentVotes: CommentVote | undefined,
+    postId: string
 }
 
-export const PostComment = ({comment}: PostCommentProps)=> {
+export const PostComment = ({comment, votesAmt, currentVotes, postId}: PostCommentProps)=> {
 
     const commentRef = useRef<HTMLDivElement>(null)
 
@@ -32,6 +38,12 @@ export const PostComment = ({comment}: PostCommentProps)=> {
                 </p>
             </div>
         </div>
-            <p className="text-sm text-zinc-900 mt-2">{comment.text}</p>
+        <p className="text-sm text-zinc-900 mt-2">{comment.text}</p>
+
+        <div className="flex gap-2 items-center">
+            <CommentVotes commentId={comment.id} initialVotesAmt={votesAmt} initialVote={currentVotes} />
+            
+            <Button variant='ghost' size='xs'><MessageSquare className="h-4 w-4 mr-1.5"/>Reply</Button>
+        </div>
     </div>
 }
