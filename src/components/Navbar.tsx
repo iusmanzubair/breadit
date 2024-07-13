@@ -3,6 +3,7 @@ import { Icons } from './Icons'
 import { buttonVariants } from './ui/Button'
 import { auth } from '@/auth'
 import { UserAccountNav } from './UserAccountNav'
+import { SearchBar } from './SearchBar'
 
 const Navbar = async () => {
   const session = await auth();
@@ -15,6 +16,7 @@ const Navbar = async () => {
           <p className='hidden text-zinc-700 text-sm font-medium md:block'>Breadit</p>
         </Link>
 
+        <SearchBar />
         
           {session?.user ? <UserAccountNav user={session?.user} /> : <Link href='/sign-in' className={buttonVariants()}>
             Sign In
