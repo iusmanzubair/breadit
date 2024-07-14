@@ -1,4 +1,5 @@
 import { db } from "@/lib/db"
+import { z } from "zod"
 
 export async function GET(req: Request) {
     try {
@@ -21,6 +22,8 @@ export async function GET(req: Request) {
 
         return new Response(JSON.stringify(results))
     } catch (error) {
-        
+        if (error instanceof z.ZodError) return new Response(error.message, { status: 422 }) //unprocessable entity
+
+        return new Response("Could not process request", { status: 500 })
     }
 }
