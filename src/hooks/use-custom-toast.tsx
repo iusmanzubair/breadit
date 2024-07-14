@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
-export const customToast = () => {
+export const CustomToast = () => {
     const router = useRouter();
     const loginToast = () => {
         toast.error('Login required!', {

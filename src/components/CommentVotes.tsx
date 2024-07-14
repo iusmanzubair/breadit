@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import { useMutation } from "@tanstack/react-query"
 import { CommentVoteRequest } from "@/lib/validators/vote"
 import axios, { AxiosError } from "axios"
-import { customToast } from "@/hooks/use-custom-toast"
+import { CustomToast } from "@/hooks/use-custom-toast"
 import { toast } from "sonner"
 
 interface CommentVotesProps {
@@ -22,7 +22,7 @@ export const CommentVotes = ({ commentId, initialVotesAmt, initialVote }: Commen
     const [votesAmt, setVotesAmt] = useState<number>(initialVotesAmt)
     const [currentVote, setCurrentVote] = useState(initialVote)
     const prevVote = usePrevious(currentVote)
-    const { loginToast } = customToast()
+    const { loginToast } = CustomToast()
 
     const { mutate: vote } = useMutation({
         mutationFn: async (voteType: VoteType) => {

@@ -59,7 +59,7 @@ export const PostFeed = ({ initialPosts, subreddit }: PostFeedProps) => {
                     </li>
                     )
                 } else {
-                    return <SinglePost currentVote={currentVote} votesAmt={votesAmt} commentAmt={post.comments.length} post={post} subredditName={post.subreddit.name}/>
+                    return <SinglePost key={post.id} currentVote={currentVote} votesAmt={votesAmt} commentAmt={post.comments.length} post={post} subredditName={post.subreddit.name}/>
                 }
             })}
         </ul>

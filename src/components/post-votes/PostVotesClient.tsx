@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import { useMutation } from "@tanstack/react-query"
 import { PostVoteRequest } from "@/lib/validators/vote"
 import axios, { AxiosError } from "axios"
-import { customToast } from "@/hooks/use-custom-toast"
+import { CustomToast } from "@/hooks/use-custom-toast"
 import { toast } from "sonner"
 
 interface PostVotesClientProps {
@@ -22,7 +22,7 @@ export const PostVotesClient = ({ postID, initialVotesAmt, initialVote }: PostVo
     const [votesAmt, setVotesAmt] = useState<number>(initialVotesAmt)
     const [currentVote, setCurrentVote] = useState(initialVote)
     const prevVote = usePrevious(currentVote)
-    const { loginToast } = customToast()
+    const { loginToast } = CustomToast()
 
     useEffect(() => {
         setCurrentVote(initialVote)

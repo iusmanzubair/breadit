@@ -8,13 +8,13 @@ import { useMutation } from "@tanstack/react-query"
 import axios, { AxiosError } from "axios"
 import { subredditPayloadType } from "@/lib/validators/subreddit";
 import { toast } from "sonner";
-import { customToast } from "@/hooks/use-custom-toast";
+import { CustomToast } from "@/hooks/use-custom-toast";
 
-export default function page() {
+export default function Page() {
 
     const [input, setInput] = useState<string>('');
     const router = useRouter();
-    const { loginToast } = customToast();
+    const { loginToast } = CustomToast();
 
     const { mutate: createCommunity, isPending } = useMutation({
         mutationFn: async () => {

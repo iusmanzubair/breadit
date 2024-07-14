@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "./ui/Button";
 import axios, { AxiosError } from "axios";
 import { subredditSubscribeType } from "@/lib/validators/subreddit";
-import { customToast } from "@/hooks/use-custom-toast"
+import {CustomToast } from "@/hooks/use-custom-toast"
 import { toast } from "sonner";
 import { startTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ interface SubscribeLeaveToggleProps {
 }
 
 export const SubscribeLeaveToggle = ({ subredditId, subredditName, isSubscribed }: SubscribeLeaveToggleProps) => {
-    const { loginToast } = customToast();
+    const { loginToast } = CustomToast();
     const router = useRouter();
 
     const { mutate: subscribe, isPending: isSubLoading } = useMutation({

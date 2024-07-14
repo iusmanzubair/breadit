@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query"
 import { CommentRequest } from "@/lib/validators/comment"
 import axios, { AxiosError } from "axios"
 import { toast } from "sonner"
-import { customToast } from "@/hooks/use-custom-toast"
+import { CustomToast } from "@/hooks/use-custom-toast"
 import { useRouter } from "next/navigation"
 
 interface CreateCommentProps {
@@ -19,7 +19,7 @@ interface CreateCommentProps {
 export const CreateComment = ({postId, replyToId}: CreateCommentProps) => {
 
     const [input, setInput] = useState<string>('')
-    const { loginToast } = customToast();
+    const { loginToast } = CustomToast();
     const router = useRouter()
 
     const {mutate: comment, isPending} = useMutation({
